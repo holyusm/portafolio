@@ -41,3 +41,5 @@ yarn-error.log*
 next-env.d.ts
 # CV con dirección y teléfono: no publicar. Usa una versión sin datos personales.
 /public/cv/
+
+.vercel
