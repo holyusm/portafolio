@@ -1,0 +1,96 @@
+@import "tailwindcss";
+
+:root {
+  --paper: #edf0ee;
+  --surface: #e1e7e5;
+  --ink: #0e1b2c;
+  --muted: #4f5f73;
+  --rule: #c5cfd3;
+  --accent: #f2b632;
+  --link: #17606b;
+  --live: #2e8b57;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #0b1522;
+    --surface: #112033;
+    --ink: #e7edf0;
+    --muted: #96a6b6;
+    --rule: #223449;
+    --link: #6cc3cf;
+    --live: #5ec28a;
+  }
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-rule: var(--rule);
+  --color-accent: var(--accent);
+  --color-link: var(--link);
+  --font-sans: var(--font-body), system-ui, sans-serif;
+  --font-display: var(--font-display), system-ui, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-size: 1.0625rem;
+  line-height: 1.6;
+}
+
+::selection {
+  background: var(--accent);
+  color: #0e1b2c;
+}
+
+:focus-visible {
+  outline: 2px solid var(--link);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.display {
+  font-family: var(--font-display), system-ui, sans-serif;
+  font-stretch: 78%;
+  font-weight: 800;
+  line-height: 0.9;
+  letter-spacing: -0.015em;
+}
+
+.measure {
+  max-width: 62ch;
+}
+
+@keyframes rise {
+  from {
+    transform: translateY(0.4em);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+.hero-name {
+  animation: rise 700ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .hero-name {
+    animation: none;
+  }
+}
