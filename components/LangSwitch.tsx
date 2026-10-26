@@ -9,16 +9,14 @@ export function LangSwitch({ lang }: { lang: Lang }) {
   const rest = pathname.replace(/^\/(es|en)/, "");
 
   return (
-    <div className="flex items-center gap-2 border-l border-rule pl-4 text-sm">
+    <div className="flex items-center gap-3 text-[length:var(--step-small)]">
       {locales.map((l) => (
         <Link
           key={l}
           href={`/${l}${rest}`}
           hrefLang={l}
           aria-current={l === lang ? "true" : undefined}
-          className={
-            l === lang ? "font-semibold underline decoration-accent decoration-2 underline-offset-4" : "text-muted hover:text-ink"
-          }
+          className={l === lang ? "font-semibold" : "soft hover:text-ink"}
         >
           {l.toUpperCase()}
         </Link>

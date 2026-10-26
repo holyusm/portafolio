@@ -11,6 +11,8 @@ export type ProjectStatus = "live" | "development" | "delivered";
 
 export type Project = {
   slug: string;
+  year: string;
+  kind: Loc<string>;
   name: string;
   tagline: Loc<string>;
   role: Loc<string>;
@@ -23,17 +25,4 @@ export type Project = {
   demoUrl?: string;
   codeUrl?: string;
   isPrivate?: boolean;
-};
-
-export type Experience = {
-  role: Loc<string>;
-  org: string;
-  period: Loc<string>;
-  bullets: Loc<string[]>;
-};
-
-export type OtherProject = {
-  name: string;
-  summary: Loc<string>;
-  stack: string[];
 };

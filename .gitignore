@@ -43,3 +43,9 @@ next-env.d.ts
 /public/cv/
 
 .vercel
+
+# herramientas locales (skill de diseño y sus capturas)
+/.agents/
+/.claude/
+/.taste-skill/
+skills-lock.json

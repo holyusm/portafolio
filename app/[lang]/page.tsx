@@ -1,13 +1,9 @@
 import { notFound } from "next/navigation";
-import { ProjectRow } from "@/components/ProjectRow";
-import { Section } from "@/components/Section";
-import { experience, skills } from "@/content/experience";
+import { Ledger } from "@/components/Ledger";
+import { skills } from "@/content/experience";
 import { getDictionary, site } from "@/content/i18n";
-import { otherProjects, projects } from "@/content/projects";
+import { projects } from "@/content/projects";
 import { hasLocale } from "@/content/types";
-
-const button =
-  "inline-flex items-center border border-ink px-4 py-2 text-sm font-medium transition-colors hover:bg-ink hover:text-paper";
 
 export default async function Home({ params }: PageProps<"/[lang]">) {
   const { lang } = await params;
@@ -16,104 +12,102 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
 
   return (
     <>
-      <section className="border-b-8 border-accent">
-        <div className="mx-auto max-w-6xl px-5 pb-14 pt-16 sm:px-8 md:pb-20 md:pt-24">
-          <p className="mb-6 inline-flex items-center gap-2 text-sm">
-            <span aria-hidden className="size-2.5 rounded-full bg-[var(--live)]" />
-            {t.hero.status}
-          </p>
-          <h1 className="display hero-name text-[clamp(4.5rem,19vw,15rem)]">
-            José
+      <section className="bg-[var(--ink)] pb-24 pt-[min(20svh,10rem)] text-[var(--bg)] md:pb-32 md:pt-[min(24svh,13rem)]">
+        <div className="col-wide">
+          <h1 className="h-display arrive max-w-[22ch]">
+            {t.hero.title[0]}
             <br />
-            Meza
+            {t.hero.title[1]}
           </h1>
-          <p className="mt-8 text-2xl font-medium sm:text-3xl">{t.hero.role}</p>
-          <p className="measure mt-4 text-lg text-muted">{t.hero.intro}</p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <a href={site.github} className={button}>
-              {t.hero.github}
+        </div>
+        <div className="col mt-10">
+          <p className="arrive-2">{t.hero.intro}</p>
+          <p className="arrive-3 mt-8 flex flex-wrap items-center gap-x-8 gap-y-4">
+            <a href="#projects" className="btn">
+              {t.hero.primary}
             </a>
-            <a href={site.linkedin} className={button}>
-              {t.hero.linkedin}
+            <a href={site.github} className="link">
+              {t.hero.secondary}
             </a>
+          </p>
+        </div>
+      </section>
+
+      <section id="projects" className="bg-surface py-28 md:py-36">
+        <div className="col">
+          <h2 className="h-section rise">{t.sections.projects}</h2>
+          <div className="rise-2 mt-10">
+            <Ledger
+              projects={projects}
+              lang={lang}
+              labels={{ statuses: t.project.statuses }}
+            />
           </div>
         </div>
       </section>
 
-      <Section id="projects" title={t.sections.projects}>
-        <ul>
-          {projects.map((p) => (
-            <ProjectRow
-              key={p.slug}
-              project={p}
-              lang={lang}
-              statusLabel={t.project.statuses[p.status]}
-            />
-          ))}
-        </ul>
-      </Section>
-
-      <Section id="experience" title={t.sections.experience}>
-        <ol className="space-y-10">
-          {experience.map((e) => (
-            <li key={e.org} className="grid gap-1 sm:grid-cols-[1fr_auto] sm:gap-x-8">
-              <div>
-                <h3 className="text-xl font-semibold">{e.role[lang]}</h3>
-                <p className="text-muted">{e.org}</p>
-              </div>
-              <p className="text-sm text-muted sm:pt-1.5">{e.period[lang]}</p>
-              <ul className="measure mt-3 list-disc space-y-1.5 pl-5 sm:col-span-2">
-                {e.bullets[lang].map((b) => (
-                  <li key={b}>{b}</li>
-                ))}
-              </ul>
-            </li>
-          ))}
-        </ol>
-      </Section>
-
-      <Section title={t.sections.skills}>
-        <dl className="grid gap-x-10 gap-y-6 sm:grid-cols-2">
+      <section className="col pt-28 md:pt-36">
+        <h2 className="h-section rise">{t.sections.tools}</h2>
+        <dl className="rise-2 mt-8 space-y-4">
           {skills.map((s) => (
-            <div key={s.group.en}>
-              <dt className="font-semibold">{s.group[lang]}</dt>
-              <dd className="mt-1 text-muted">{s.items.join(", ")}</dd>
+            <div
+              key={s.group.en}
+              className="grid grid-cols-1 gap-x-2 sm:grid-cols-[55%_1fr]"
+            >
+              <dt className="font-medium">{s.group[lang]}</dt>
+              <dd>{s.items}</dd>
             </div>
           ))}
         </dl>
-      </Section>
+      </section>
 
-      <Section title={t.sections.other}>
-        <ul className="grid gap-x-10 gap-y-8 sm:grid-cols-2">
-          {otherProjects.map((o) => (
-            <li key={o.name}>
-              <h3 className="font-semibold">{o.name}</h3>
-              <p className="mt-1">{o.summary[lang]}</p>
-              <p className="mt-1 text-sm text-muted">{o.stack.join(", ")}</p>
-            </li>
+      <section className="about-grid pt-28 md:pt-40">
+        <div className="col letter">
+          <h2 className="h-section rise">{t.sections.about}</h2>
+          <div className="mt-8 space-y-5">
+            {t.about.paragraphs.map((p, i) => (
+              <p key={i} className={i === 0 ? "rise" : i === 1 ? "rise-2" : "rise-3"}>
+                {p}
+              </p>
+            ))}
+          </div>
+          <p className="rise mt-10 text-[length:var(--step-lead)] italic">
+            {t.about.signature}
+          </p>
+          <p className="text-[length:var(--step-small)] soft">{t.about.role}</p>
+        </div>
+        <dl className="col facts space-y-5">
+          {t.about.facts.map((f) => (
+            <div key={f.label} className="rise-2">
+              <dt className="text-[length:var(--step-small)] soft">{f.label}</dt>
+              <dd>{f.value}</dd>
+            </div>
           ))}
-        </ul>
-      </Section>
+        </dl>
+      </section>
 
-      <Section title={t.sections.education}>
-        <h3 className="text-xl font-semibold">{t.education.school}</h3>
-        <p className="text-muted">
-          {t.education.degree} · {t.education.period}
-        </p>
-        <p className="mt-3 text-muted">{t.education.courses.join(", ")}</p>
-      </Section>
-
-      <Section id="contact" title={t.sections.contact}>
-        <p className="measure text-2xl font-medium">{t.contact.text}</p>
-        <p className="mt-4">
-          <a
-            href={`mailto:${site.email}`}
-            className="display text-4xl underline decoration-accent decoration-4 underline-offset-8 hover:text-link sm:text-5xl"
-          >
-            {site.email}
-          </a>
-        </p>
-      </Section>
+      <section
+        id="contact"
+        className="mt-32 bg-accent py-24 text-accent-ink md:mt-44 md:py-32"
+      >
+        <div className="col-wide">
+          <p className="rise max-w-[20ch] text-[length:var(--step-lead)] font-medium leading-[1.2] tracking-[-0.02em] sm:text-[length:var(--step-head)] sm:leading-[1.05]">
+            {t.contact.sentence}
+          </p>
+          <p className="rise-2 mt-10 font-medium">
+            {t.contact.question}
+          </p>
+          <p className="rise-3 mt-3 flex flex-col gap-2">
+            <a href={`mailto:${site.email}`} className="link w-fit">
+              {site.email}
+            </a>
+            <a href={site.linkedin} className="link w-fit">
+              LinkedIn
+            </a>
+          </p>
+          <p className="mt-6 text-[length:var(--step-small)] opacity-80">{t.contact.city}</p>
+        </div>
+      </section>
     </>
   );
 }

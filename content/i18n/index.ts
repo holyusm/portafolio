@@ -2,23 +2,15 @@ import type { Lang } from "../types";
 
 type Dictionary = {
   meta: { title: string; description: string };
-  nav: { projects: string; experience: string; contact: string };
+  nav: { projects: string; contact: string };
   hero: {
-    role: string;
+    title: [string, string];
     intro: string;
-    status: string;
-    cv: string;
-    github: string;
-    linkedin: string;
+    primary: string;
+    secondary: string;
   };
-  sections: {
-    projects: string;
-    experience: string;
-    skills: string;
-    other: string;
-    education: string;
-    contact: string;
-  };
+  sections: { projects: string; tools: string; about: string };
+  ledger: { kind: string };
   project: {
     back: string;
     role: string;
@@ -31,11 +23,18 @@ type Dictionary = {
     demo: string;
     code: string;
     privateCode: string;
+    requestCode: string;
+    all: string;
     next: string;
     statuses: { live: string; development: string; delivered: string };
   };
-  education: { school: string; degree: string; period: string; courses: string[] };
-  contact: { text: string };
+  about: {
+    paragraphs: string[];
+    signature: string;
+    role: string;
+    facts: { label: string; value: string }[];
+  };
+  contact: { sentence: string; question: string; city: string };
   footer: string;
 };
 
@@ -44,26 +43,22 @@ const dictionaries: Record<Lang, Dictionary> = {
     meta: {
       title: "José Meza · Desarrollador full-stack",
       description:
-        "Portafolio de José Meza Pontigo, estudiante de Ingeniería Civil Informática en la UTFSM. Productos web de punta a punta con React, Next.js, NestJS y PostgreSQL.",
+        "Portafolio de José Meza Pontigo, estudiante de Ingeniería Civil Informática en la UTFSM. Holy Fitness, Transportes TAJTAJ y StopBet: productos web de punta a punta.",
     },
-    nav: { projects: "Proyectos", experience: "Experiencia", contact: "Contacto" },
+    nav: { projects: "Proyectos", contact: "Contacto" },
     hero: {
-      role: "Desarrollador full-stack",
+      title: ["José Meza.", "Desarrollador web."],
       intro:
-        "Estudio Ingeniería Civil Informática en la UTFSM y construyo productos web de punta a punta: un SaaS para gimnasios, una plataforma para una empresa de transporte y una app de apoyo para personas en recuperación. Busco una práctica en backend, frontend o ingeniería de software.",
-      status: "Disponible para práctica",
-      cv: "Descargar CV",
-      github: "GitHub",
-      linkedin: "LinkedIn",
+        "Hago desarrollo full-stack: un SaaS para gimnasios, la plataforma de una empresa de transporte y una app clínica de apoyo a personas en recuperación. Estudio Ingeniería Civil Informática en la UTFSM y busco una práctica.",
+      primary: "Ver proyectos",
+      secondary: "GitHub",
     },
     sections: {
       projects: "Proyectos",
-      experience: "Experiencia",
-      skills: "Herramientas",
-      other: "Otros proyectos",
-      education: "Educación",
-      contact: "Contacto",
+      tools: "Herramientas",
+      about: "Sobre mí",
     },
+    ledger: { kind: "Tipo" },
     project: {
       back: "Volver a proyectos",
       role: "Rol",
@@ -73,29 +68,45 @@ const dictionaries: Record<Lang, Dictionary> = {
       team: (n) => `Equipo de ${n}`,
       problem: "Qué resuelve",
       built: "Qué construí",
-      demo: "Ver demo",
+      demo: "Visitar sitio",
       code: "Ver código",
       privateCode: "Código privado, disponible a solicitud",
-      next: "Siguiente proyecto",
+      requestCode: "Pedir acceso al código",
+      all: "Todos los proyectos",
+      next: "Siguiente",
       statuses: {
         live: "En línea",
         development: "En desarrollo",
         delivered: "Entregado",
       },
     },
-    education: {
-      school: "Universidad Técnica Federico Santa María",
-      degree: "Ingeniería Civil Informática",
-      period: "2022 – actualidad",
-      courses: [
-        "Bases de Datos",
-        "Análisis de Algoritmos",
-        "Estructuras de Datos",
-        "Estadística Computacional",
+    about: {
+      paragraphs: [
+        "Estudio Ingeniería Civil Informática en la Universidad Técnica Federico Santa María, en Valparaíso. Me interesa el trabajo de punta a punta: del modelo de datos a la interfaz.",
+        "Hoy desarrollo Holy Fitness, un SaaS para gimnasios que diseñé y programo yo solo. Entre diciembre de 2025 y abril de 2026 construí, como freelance, la plataforma de gestión de Transportes TAJTAJ, una empresa de transporte chilena.",
+        "En StopBet, una plataforma clínica creada con el grupo terapéutico AJUTER, fui Scrum Master y co-líder de un equipo de seis. Además de coordinar, desarrollé funcionalidades del producto.",
+        "Busco una práctica donde seguir creciendo en backend, frontend o ingeniería de software.",
+      ],
+      signature: "José Meza Pontigo",
+      role: "Desarrollador full-stack",
+      facts: [
+        {
+          label: "Estudios",
+          value: "Ingeniería Civil Informática, UTFSM, 2022 – actualidad",
+        },
+        {
+          label: "Cursos",
+          value:
+            "Bases de Datos, Análisis de Algoritmos, Estructuras de Datos, Estadística Computacional",
+        },
+        { label: "Idiomas", value: "Español nativo, inglés avanzado" },
       ],
     },
     contact: {
-      text: "Si tienes una práctica o un proyecto en mente, escríbeme.",
+      sentence:
+        "¿Tienes una práctica o un proyecto en mente?",
+      question: "Escríbeme",
+      city: "Valparaíso, Chile",
     },
     footer: "José Meza Pontigo",
   },
@@ -103,26 +114,18 @@ const dictionaries: Record<Lang, Dictionary> = {
     meta: {
       title: "José Meza · Full-stack developer",
       description:
-        "Portfolio of José Meza Pontigo, a Computer Science Engineering student at UTFSM. End-to-end web products with React, Next.js, NestJS and PostgreSQL.",
+        "Portfolio of José Meza Pontigo, a Computer Science Engineering student at UTFSM. Holy Fitness, Transportes TAJTAJ and StopBet: end-to-end web products.",
     },
-    nav: { projects: "Projects", experience: "Experience", contact: "Contact" },
+    nav: { projects: "Projects", contact: "Contact" },
     hero: {
-      role: "Full-stack developer",
+      title: ["José Meza.", "Web developer."],
       intro:
-        "I study Computer Science Engineering at UTFSM and build web products end to end: a gym SaaS, a platform for a trucking company and a support app for people in recovery. I'm looking for an internship in backend, frontend or software engineering.",
-      status: "Open to internships",
-      cv: "Download CV",
-      github: "GitHub",
-      linkedin: "LinkedIn",
+        "I do full-stack development: a gym SaaS, a trucking company's platform and a clinical support app for people in recovery. I study Computer Science Engineering at UTFSM and I'm looking for an internship.",
+      primary: "View projects",
+      secondary: "GitHub",
     },
-    sections: {
-      projects: "Projects",
-      experience: "Experience",
-      skills: "Tools",
-      other: "Other projects",
-      education: "Education",
-      contact: "Contact",
-    },
+    sections: { projects: "Projects", tools: "Tools", about: "About me" },
+    ledger: { kind: "Type" },
     project: {
       back: "Back to projects",
       role: "Role",
@@ -132,29 +135,44 @@ const dictionaries: Record<Lang, Dictionary> = {
       team: (n) => `Team of ${n}`,
       problem: "What it solves",
       built: "What I built",
-      demo: "View demo",
+      demo: "Visit site",
       code: "View code",
       privateCode: "Private code, available on request",
-      next: "Next project",
+      requestCode: "Request code access",
+      all: "All projects",
+      next: "Next",
       statuses: {
         live: "Live",
         development: "In development",
         delivered: "Delivered",
       },
     },
-    education: {
-      school: "Universidad Técnica Federico Santa María",
-      degree: "Computer Science Engineering",
-      period: "2022 – present",
-      courses: [
-        "Databases",
-        "Algorithm Analysis",
-        "Data Structures",
-        "Computational Statistics",
+    about: {
+      paragraphs: [
+        "I study Computer Science Engineering at Universidad Técnica Federico Santa María, in Valparaíso. I like end-to-end work: from the data model to the interface.",
+        "Today I'm building Holy Fitness, a gym SaaS that I designed and code on my own. Between December 2025 and April 2026 I built, as a freelancer, the management platform for Transportes TAJTAJ, a Chilean trucking company.",
+        "On StopBet, a clinical platform created with the AJUTER therapy group, I was Scrum Master and co-lead of a team of six. Besides coordinating, I built product features.",
+        "I'm looking for an internship where I can keep growing in backend, frontend or software engineering.",
+      ],
+      signature: "José Meza Pontigo",
+      role: "Full-stack developer",
+      facts: [
+        {
+          label: "Education",
+          value: "Computer Science Engineering, UTFSM, 2022 – present",
+        },
+        {
+          label: "Courses",
+          value:
+            "Databases, Algorithm Analysis, Data Structures, Computational Statistics",
+        },
+        { label: "Languages", value: "Spanish native, English advanced" },
       ],
     },
     contact: {
-      text: "If you have an internship or a project in mind, write to me.",
+      sentence: "Have an internship or a project in mind?",
+      question: "Write to me",
+      city: "Valparaíso, Chile",
     },
     footer: "José Meza Pontigo",
   },
@@ -167,5 +185,4 @@ export const site = {
   email: "jose.mezap@usm.cl",
   github: "https://github.com/holyusm",
   linkedin: "https://www.linkedin.com/in/josé-miguel-meza-pontigo/",
-  cv: "/cv/CV_Jose_Meza.pdf",
 };

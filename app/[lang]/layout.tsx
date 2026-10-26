@@ -1,20 +1,16 @@
 import type { Metadata } from "next";
-import { Bricolage_Grotesque, Instrument_Sans } from "next/font/google";
+import { Albert_Sans } from "next/font/google";
 import { notFound } from "next/navigation";
 import { Header } from "@/components/Header";
 import { getDictionary, site } from "@/content/i18n";
 import { hasLocale, locales } from "@/content/types";
 import "../globals.css";
 
-const display = Bricolage_Grotesque({
-  variable: "--font-display",
+const albert = Albert_Sans({
+  variable: "--font-albert",
   subsets: ["latin"],
-  axes: ["wdth"],
-});
-
-const body = Instrument_Sans({
-  variable: "--font-body",
-  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  style: ["normal", "italic"],
 });
 
 export function generateStaticParams() {
@@ -53,13 +49,11 @@ export default async function RootLayout({
   const t = getDictionary(lang);
 
   return (
-    <html lang={lang} className={`${display.variable} ${body.variable}`}>
+    <html lang={lang} className={albert.variable}>
       <body>
         <Header lang={lang} nav={t.nav} />
         <main>{children}</main>
-        <footer className="mx-auto max-w-6xl px-5 py-10 text-sm text-muted sm:px-8">
-          {t.footer}
-        </footer>
+        <footer className="col py-16 text-[length:var(--step-small)] soft">{t.footer}</footer>
       </body>
     </html>
   );

@@ -11,7 +11,7 @@ export default async function Image({
   params: Promise<{ lang: string }>;
 }) {
   const { lang } = await params;
-  const role = getDictionary(hasLocale(lang) ? lang : "es").hero.role;
+  const role = getDictionary(hasLocale(lang) ? lang : "es").hero.title[1];
 
   return new ImageResponse(
     (
@@ -22,13 +22,13 @@ export default async function Image({
           display: "flex",
           flexDirection: "column",
           justifyContent: "flex-end",
-          background: "#edf0ee",
-          color: "#0e1b2c",
+          background: "#ffffff",
+          color: "#232323",
           padding: 72,
-          borderBottom: "24px solid #f2b632",
+          borderLeft: "24px solid #a1ffcb",
         }}
       >
-        <div style={{ fontSize: 190, fontWeight: 800, lineHeight: 0.9 }}>
+        <div style={{ fontSize: 96, fontWeight: 500, lineHeight: 1.05 }}>
           José Meza
         </div>
         <div style={{ fontSize: 48, marginTop: 28 }}>{role}</div>
